@@ -1,0 +1,117 @@
+public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
+
+
+
+public class Robot {
+    int x;
+    int y;
+    Direction direction;
+    public Robot(int x, int y, Direction dir){
+        this.x = x;
+        this.y = y;
+        this.direction = dir;
+    }
+    public Direction getDirection() {
+        return direction;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void turnLeft() {
+        switch(getDirection()){
+            case UP:
+                direction = Direction.LEFT;
+                break;
+            case LEFT:
+                direction = Direction.DOWN;
+                break;
+            case DOWN:
+                direction = Direction.RIGHT;
+                break;
+            case RIGHT:
+                direction = Direction.UP;
+                break;
+        }
+    }
+    public void turnRight() {
+        switch(getDirection()){
+            case UP:
+                direction = Direction.RIGHT;
+                break;
+            case RIGHT:
+                direction = Direction.DOWN;
+                break;
+            case DOWN:
+                direction = Direction.LEFT;
+                break;
+            case LEFT:
+                direction = Direction.UP;
+                break;
+        }
+    }
+    public void stepForward() {
+        switch(getDirection()){
+            case UP:
+                y++;
+                break;
+            case LEFT:
+                x--;
+                break;
+            case DOWN:
+                y--;
+                break;
+            case RIGHT:
+                x++;
+                break;
+        }
+    }
+}
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+	    Direction dir = Direction.UP;
+	    int x = 1;
+	    int y = -2;
+		Robot robot = new Robot(x, y, dir);
+		System.out.println("Robot coord: " + robot.getDirection() + " " + robot.getX() + " " + robot.getY());
+		moveRobot(robot, 2, 3);
+		System.out.println("Robot finaly coor: " + robot.getDirection() + " " + robot.getX() + " " + robot.getY());
+	}
+	public static void moveRobot(Robot robot, int toX, int toY) {
+        if(robot.getX() > toX){
+            while(robot.getDirection() != Direction.LEFT){
+                robot.turnRight();
+            }
+        } else {
+            while(robot.getDirection() != Direction.RIGHT){
+                robot.turnLeft();
+            }
+        }
+        while(robot.getX() != toX){
+            robot.stepForward();
+        }
+        if(robot.getY() > toY){
+            while(robot.getDirection() != Direction.DOWN){
+                robot.turnRight();
+            }
+        } else {
+            while(robot.getDirection() != Direction.UP){
+                robot.turnRight();
+            }
+        }
+        while(robot.getY() != toY){
+            robot.stepForward();
+        }
+    }
+}
